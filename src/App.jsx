@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
+import React from "react";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SharedLayout from './layout/SharedLayout';
+import HomePage from './pages/Home';
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <img src="https://tarfin.com/img/logo.svg" alt="Tarfin Logo" />
-    </div>
+    <BrowserRouter>
+        <Routes>
+            <Route path='/' element={<SharedLayout />}>
+                <Route index element={<HomePage/>} />
+            </Route>
+        </Routes>
+    </BrowserRouter>
   )
 }
 
