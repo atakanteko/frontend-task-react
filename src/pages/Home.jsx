@@ -1,22 +1,20 @@
 import React from "react";
 import { useEffect } from "react";
 import EventContainer from "../components/events/EventContainer";
-import SimpleSearch from "../components/common/SimpleSearch";
 import Spinner from "../components/common/Spinner";
 import {useSelector, useDispatch} from "react-redux";
 import {eventResource} from "../features/event/eventSlice";
 
-const params ={
-    keyword: 'nba',
-    page: 0
-}
 
 function Home(){
     const dispatch = useDispatch()
     const { isAnyEventExisted, isLoading, eventData } = useSelector((store) => store.event);
 
     useEffect(()=>{
-        dispatch(eventResource(params))
+        dispatch(eventResource({
+            keyword: 'nba',
+            page: 0
+        }))
     }, [])
 
     if(isLoading && !isAnyEventExisted) {
@@ -36,7 +34,6 @@ function Home(){
                     </div>
                 ) : <EventContainer eventData={eventData}/>
             }
-
         </>
     )
 }
