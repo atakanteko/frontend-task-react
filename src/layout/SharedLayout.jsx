@@ -7,7 +7,7 @@ function SharedLayout(){
         <section>
             <main className="container-fluid g-0 min-vh-100">
                 <Header />
-                <div className="container g-0 px-2 px-lg-0">
+                <div className="container g-0 px-5 px-lg-0">
                     <Outlet/>
                 </div>
             </main>
