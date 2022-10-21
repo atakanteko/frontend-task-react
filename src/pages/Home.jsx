@@ -1,33 +1,39 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import CartItem from "../components/card/CartItem";
-import { sourceData } from '../../sourceData';
+import { useEffect } from "react";
+import EventContainer from "../components/events/EventContainer";
+import Spinner from "../components/common/Spinner";
+import {useSelector, useDispatch} from "react-redux";
+import {eventResource} from "../features/event/eventSlice";
+
+const params ={
+    keyword: 'nba',
+    page: 0
+}
 
 function Home(){
-    const [mockData, setMockData] = useState([])
+    const dispatch = useDispatch()
+    const { isAnyEventExisted, isLoading, eventData } = useSelector((store) => store.event);
+
     useEffect(()=>{
-        setMockData(sourceData._embedded.events)
+        dispatch(eventResource(params))
     }, [])
-    return (
-            <div className="row">
-                {
-                    mockData.map((item) => {
-                        return(
-                            <div className="col-12 col-lg-4 gy-5" key={item.id}>
-                                <CartItem id={item.id}
-                                          imageUrl={item.images[0].url}
-                                          name={item.name ? item.name : '-'}
-                                          startDate={item.dates?.start?.localDate ? item.dates?.start?.localDate : '-'}
-                                          time={item.dates?.start?.localTime ? item.dates?.start?.localTime : '-'}
-                                          promoter={item.promoter?.name ? item.promoter?.name : '-'}
-                                          price={`${item.priceRanges ? `${item.priceRanges[0].min} $` : 'Not found' }`}
-                                />
-                            </div>
-                        )
-                    })
-                }
-        </div>
-    )
+
+    if(isLoading && isAnyEventExisted) {
+        return (
+            <div className="row min-vh-100 d-flex align-items-center justify-content-center">
+                <Spinner />
+            </div>
+        )
+    }
+    if(isLoading && !isAnyEventExisted) {
+        return (
+            <div className="row min-vh-100 d-flex align-items-center justify-content-center">
+                <h1 className="text-center">No Events To Display</h1>
+            </div>
+        )
+    }
+
+    return <EventContainer eventData={eventData}/>
 }
 
 export default Home;
