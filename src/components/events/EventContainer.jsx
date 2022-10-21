@@ -3,7 +3,7 @@ import CartItem from "../card/CartItem";
 
 function EventContainer({eventData}){
     return(
-        <div className="row">
+        <div className="row pb-5">
             {
                 eventData.map((item) => {
                     return(
