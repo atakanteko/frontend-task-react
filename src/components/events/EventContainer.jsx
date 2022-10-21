@@ -1,10 +1,8 @@
 import React from "react";
 import CartItem from "../card/CartItem";
-import SimpleSearch from "../common/SimpleSearch";
 function EventContainer({eventData}){
     return(
         <>
-            <SimpleSearch />
             <div className="row pb-5">
                 {
                     eventData.map((item) => {

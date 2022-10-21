@@ -6,7 +6,7 @@ import Footer from "../components/common/Footer";
 function SharedLayout(){
     return(
         <section>
-            <main className="container-fluid g-0 min-vh-100">
+            <main className="container-fluid g-0 min-vh-100 position-relative">
                 <Header />
                 <div className="container g-0 px-5 px-lg-0">
                     <Outlet/>

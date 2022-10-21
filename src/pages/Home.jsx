@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import EventContainer from "../components/events/EventContainer";
+import SimpleSearch from "../components/common/SimpleSearch";
 import Spinner from "../components/common/Spinner";
 import {useSelector, useDispatch} from "react-redux";
 import {eventResource} from "../features/event/eventSlice";
@@ -18,13 +19,6 @@ function Home(){
         dispatch(eventResource(params))
     }, [])
 
-    if(isLoading && isAnyEventExisted) {
-        return (
-            <div className="row min-vh-100 d-flex align-items-center justify-content-center">
-                <Spinner />
-            </div>
-        )
-    }
     if(isLoading && !isAnyEventExisted) {
         return (
             <div className="row min-vh-100 d-flex align-items-center justify-content-center">
@@ -33,7 +27,19 @@ function Home(){
         )
     }
 
-    return <EventContainer eventData={eventData}/>
+    return (
+        <>
+            <SimpleSearch />
+            {
+                (isLoading && isAnyEventExisted) ? (
+                    <div className="row min-vh-100 d-flex align-items-center justify-content-center">
+                        <Spinner />
+                    </div>
+                ) : <EventContainer eventData={eventData}/>
+            }
+
+        </>
+    )
 }
 
 export default Home;
