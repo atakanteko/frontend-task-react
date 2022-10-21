@@ -1,5 +1,6 @@
 import React from "react";
 import CartItem from "../card/CartItem";
+
 function EventContainer({eventData}){
     return(
         <>

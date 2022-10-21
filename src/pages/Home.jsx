@@ -1,21 +1,11 @@
 import React from "react";
-import { useEffect } from "react";
 import EventContainer from "../components/events/EventContainer";
 import Spinner from "../components/common/Spinner";
-import {useSelector, useDispatch} from "react-redux";
-import {eventResource} from "../features/event/eventSlice";
+import { useSelector } from "react-redux";
 
 
 function Home(){
-    const dispatch = useDispatch()
     const { isAnyEventExisted, isLoading, eventData } = useSelector((store) => store.event);
-
-    useEffect(()=>{
-        dispatch(eventResource({
-            keyword: 'nba',
-            page: 0
-        }))
-    }, [])
 
     if(isLoading && !isAnyEventExisted) {
         return (

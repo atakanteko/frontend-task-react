@@ -1,7 +1,8 @@
 import React from 'react'
 import {Link} from "react-router-dom";
-import Logo from "../../favicon.svg";
 import SimpleSearch from "./SimpleSearch";
+import Logo from "../../favicon.svg";
+
 function Header(){
     return(
         <nav className="navbar bg-primary px-2 px-lg-5 mb-2 d-flex justify-content-between">
