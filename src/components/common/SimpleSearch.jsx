@@ -1,31 +1,28 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {eventResource} from "../../features/event/eventSlice";
-import {setSearchPhrase, setResetCurrentPage} from "../../features/event/eventSlice";
+import {setSearchPhrase} from "../../features/event/eventSlice";
 
 function SimpleSearch(){
     const dispatch = useDispatch()
-    const { resetCurrentPage } = useSelector((store) => store.event);
+    const { searchPhrase } = useSelector((store) => store.event);
 
-    const [searchText, setSearchText] = useState('nba')
-
-    useEffect(()=>{
-        dispatch(setResetCurrentPage())
-        dispatch(setSearchPhrase(searchText))
+    const handleSearch = (e) => {
+        e.preventDefault();
         dispatch(eventResource({
-            keyword: searchText,
+            keyword: searchPhrase,
             page: 0
         }))
-    }, [searchText])
+    }
 
     return(
-        <form  className="d-flex col-12 col-lg-4">
+        <form  className="d-flex col-12 col-lg-4" onSubmit={handleSearch}>
             <input type="search" className="form-control me-2"
                    placeholder="search"
                    aria-describedby="search-addon"
-                   onChange={(event) => { setSearchText(event.target.value)}}
+                   onChange={(event) => { dispatch(setSearchPhrase(event.target.value))}}
             />
+            <button type="submit">Search</button>
         </form>
     )
 }

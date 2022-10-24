@@ -6,8 +6,7 @@ const initialState = {
     eventData: [],
     paginationData:{},
     isAnyEventExisted: true,
-    searchText: '',
-    resetCurrentPage: 1,
+    searchPhrase: 'bocelli'
 }
 
 export const eventResource = createAsyncThunk(
@@ -26,20 +25,15 @@ const eventSlice = createSlice({
     name:'event',
     initialState,
     reducers: {
-        setSearchPhrase:(state, action) => {
-            state.searchText = action.payload
+        setSearchPhrase: (state, action) => {
+            state.searchPhrase = action.payload
         },
-        setResetCurrentPage:(state) => {
-            state.resetCurrentPage = 1;
-        }
-    }
-    ,
+    },
     extraReducers: {
         [eventResource.pending]: (state) => {
             state.isLoading = true;
         },
         [eventResource.fulfilled]: (state, action) => {
-            console.log(action.payload)
             if ('_embedded' in action.payload){
                 state.eventData = action.payload._embedded.events;
                 state.paginationData = action.payload.page;
@@ -55,4 +49,4 @@ const eventSlice = createSlice({
 })
 
 export default eventSlice.reducer;
-export const { setSearchPhrase, setResetCurrentPage } = eventSlice.actions;
+export const { setSearchPhrase } = eventSlice.actions;
