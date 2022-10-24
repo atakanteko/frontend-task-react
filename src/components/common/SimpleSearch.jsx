@@ -1,14 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {eventResource} from "../../features/event/eventSlice";
+import {setSearchPhrase, setResetCurrentPage} from "../../features/event/eventSlice";
 
 function SimpleSearch(){
     const dispatch = useDispatch()
+    const { resetCurrentPage } = useSelector((store) => store.event);
 
     const [searchText, setSearchText] = useState('nba')
 
     useEffect(()=>{
+        dispatch(setResetCurrentPage())
+        dispatch(setSearchPhrase(searchText))
         dispatch(eventResource({
             keyword: searchText,
             page: 0

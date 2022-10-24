@@ -11,3 +11,50 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.pagination-ta{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-ta .main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-ta .pageNumbers {
+  list-style: none;
+  display: flex;
+  padding: unset;
+}
+
+.pagination-ta .pageNumbers li{
+  padding: 10px;
+  border: 1px solid #000000;
+}
+
+.pagination-ta .pageNumbers li.active {
+  background-color: #000000;
+  color: #fdfdfd;
+
+}
+
+.pagination-ta .pageNumbers li.button{
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor:pointer;
+}
+
+.pagination-ta .pageNumbers li.button:hover{
+  background-color: white;
+  color: black;
+}
+
+.pagination-ta .pageNumbers li.button:focus{
+  outline: none;
+}
