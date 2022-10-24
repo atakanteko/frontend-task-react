@@ -22,7 +22,7 @@ function SimpleSearch(){
                    aria-describedby="search-addon"
                    onChange={(event) => { dispatch(setSearchPhrase(event.target.value))}}
             />
-            <button type="submit">Search</button>
+            <button type="submit" className="btn button btn-warning text-black">Search</button>
         </form>
     )
 }
