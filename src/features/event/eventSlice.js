@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getEventsByKeyword } from "../../client/event";
+import { getEventsByKeyword, getEventDetail } from "../../client/event";
 
 const initialState = {
     isLoading: false,
     eventData: [],
     paginationData:{},
     isAnyEventExisted: true,
-    searchPhrase: 'bocelli'
+    searchPhrase: 'bocelli',
+    eventDetailData: null,
+    isRejected: false,
 }
 
 export const eventResource = createAsyncThunk(
@@ -20,6 +22,20 @@ export const eventResource = createAsyncThunk(
         }
     },
 );
+
+export const eventDetail = createAsyncThunk(
+    'event/eventDetail',
+    async (id, thunkAPI) => {
+        try {
+            const resp = await getEventDetail(id);
+            console.log(resp)
+            return resp.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response);
+        }
+    },
+);
+
 
 const eventSlice = createSlice({
     name:'event',
@@ -44,6 +60,17 @@ const eventSlice = createSlice({
         },
         [eventResource.rejected]: (state) => {
             state.isLoading = true;
+        },
+        [eventDetail.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [eventDetail.fulfilled]: (state, action) => {
+                state.eventDetailData = action.payload;
+                state.isLoading = false;
+        },
+        [eventDetail.rejected]: (state) => {
+            state.isLoading = true;
+            state.isRejected = true;
         },
     },
 })

@@ -8,7 +8,7 @@ function EventContainer({eventData}){
                 {
                     eventData.map((item) => {
                         return(
-                            <div className="col-12 col-lg-4 gy-5" key={item.id}>
+                            <div className="col-12 col-lg-3 gy-5" key={item.id}>
                                 <CartItem id={item.id}
                                           imageUrl={item.images[0].url}
                                           name={item.name ? item.name : '-'}

@@ -1,12 +1,17 @@
 import React from "react";
 import {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {eventResource} from "../../features/event/eventSlice";
 import {setSearchPhrase} from "../../features/event/eventSlice";
+import {useLocation, useNavigate} from 'react-router-dom';
 
 function SimpleSearch(){
     const dispatch = useDispatch()
     const [inputText, setInputText] = useState('')
+    const location = useLocation();
+    const navigate = useNavigate();
+
+
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -15,6 +20,9 @@ function SimpleSearch(){
             keyword: inputText,
             page: 0
         }))
+        if (location.pathname.includes('event-details')){
+            navigate('/')
+        }
     }
 
     return(
