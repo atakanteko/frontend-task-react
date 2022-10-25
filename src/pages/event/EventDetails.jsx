@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
+import EventDetail from "../../components/events/EventDetail";
 import { eventDetail } from "../../features/event/eventSlice";
 
 function EventDetails(){
@@ -12,7 +13,6 @@ function EventDetails(){
     useEffect(() => {
         dispatch((eventDetail(eventId)))
     }, [eventId])
-
 
     if (eventDetailData === null && isLoading && !isRejected){
         return(
@@ -28,12 +28,13 @@ function EventDetails(){
             </div>
         )
     }
+    else{
+        return(
+            <EventDetail eventDetailData={eventDetailData} />
+        )
+    }
 
-    return(
-        <div>
-            <h1>Event Details: {eventId}</h1>
-        </div>
-    )
+
 }
 
 export default EventDetails;
