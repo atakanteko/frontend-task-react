@@ -1,9 +1,10 @@
 import React from "react";
-import {useEffect} from "react";
+import {useEffect,useState} from "react";
 import EventContainer from "../components/events/EventContainer";
 import Spinner from "../components/common/Spinner";
 import {useDispatch, useSelector} from "react-redux";
 import {eventResource} from "../features/event/eventSlice";
+import Pagination from "../components/pagination/Pagination";
 
 function Home(){
     const dispatch = useDispatch()
@@ -16,6 +17,30 @@ function Home(){
         }))
     }, []);
 
+    const pageNumberLimit = 5;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [maxPageLimit, setMaxPageLimit] = useState(5);
+    const [minPageLimit, setMinPageLimit] = useState(0);
+
+    const onPrevClick = ()=>{
+       if((currentPage-1) % pageNumberLimit === 0){
+            setMaxPageLimit(maxPageLimit - pageNumberLimit);
+            setMinPageLimit(minPageLimit - pageNumberLimit);
+        }
+        setCurrentPage(prev=> prev-1);
+    }
+
+    const onPageChange= (pageNumber)=>{
+        setCurrentPage(pageNumber);
+    }
+
+    const onNextClick = ()=>{
+        if(currentPage+1 > maxPageLimit){
+            setMaxPageLimit(maxPageLimit + pageNumberLimit);
+            setMinPageLimit(minPageLimit + pageNumberLimit);
+        }
+        setCurrentPage(prev=>prev+1);
+    }
 
     if(isLoading && !isAnyEventExisted) {
         return (
@@ -34,6 +59,13 @@ function Home(){
                     </div>
                 ) : <EventContainer eventData={eventData}/>
             }
+            <Pagination maxPageLimit={maxPageLimit}
+                        minPageLimit={minPageLimit}
+                        currentPage={currentPage}
+                        onPrevClick={onPrevClick}
+                        onNextClick={onNextClick}
+                        onPageChange={onPageChange}
+            />
         </>
     )
 }

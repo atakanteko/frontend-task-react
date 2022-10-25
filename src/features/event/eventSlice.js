@@ -34,6 +34,7 @@ const eventSlice = createSlice({
             state.isLoading = true;
         },
         [eventResource.fulfilled]: (state, action) => {
+            console.log(action.payload.page)
             if ('_embedded' in action.payload){
                 state.eventData = action.payload._embedded.events;
                 state.paginationData = action.payload.page;
