@@ -10,13 +10,6 @@ function Home(){
     const dispatch = useDispatch()
     const { isAnyEventExisted, isLoading, eventData, searchPhrase } = useSelector((store) => store.event);
 
-    useEffect(() => {
-        dispatch(eventResource({
-            keyword: searchPhrase,
-            page: 0
-        }))
-    }, []);
-
     const pageNumberLimit = 5;
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPageLimit, setMaxPageLimit] = useState(5);
@@ -30,8 +23,11 @@ function Home(){
         setCurrentPage(prev=> prev-1);
     }
 
-    const onPageChange= (pageNumber)=>{
+    const onPageChange = (pageNumber)=>{
         setCurrentPage(pageNumber);
+    }
+    const resetCurrentPage = ()=>{
+        setCurrentPage(1);
     }
 
     const onNextClick = ()=>{
@@ -41,6 +37,18 @@ function Home(){
         }
         setCurrentPage(prev=>prev+1);
     }
+
+
+    useEffect(() => {
+        dispatch(eventResource({
+            keyword: searchPhrase,
+            page: (currentPage-1)
+        }))
+    }, [currentPage]);
+
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [searchPhrase]);
 
     if(isLoading && !isAnyEventExisted) {
         return (
@@ -65,6 +73,7 @@ function Home(){
                         onPrevClick={onPrevClick}
                         onNextClick={onNextClick}
                         onPageChange={onPageChange}
+                        resetCurrentPage={resetCurrentPage}
             />
         </>
     )

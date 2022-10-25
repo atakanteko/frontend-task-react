@@ -7,7 +7,6 @@ import {setSearchPhrase} from "../../features/event/eventSlice";
 function SimpleSearch(){
     const dispatch = useDispatch()
     const [inputText, setInputText] = useState('')
-    const { searchPhrase } = useSelector((store) => store.event);
 
     const handleSearch = (e) => {
         e.preventDefault();
